@@ -208,7 +208,8 @@ public class StreamingSkybox : MonoBehaviour {
             else
             {
                 byte[] data= File.ReadAllBytes(filePath);
-                texture = new Texture2D(width: 512, height: 512, format: TextureFormat.BGRA32, mipmap: true, linear: false);
+                //texture = new Texture2D(width: 512, height: 512, format: TextureFormat.BGRA32, mipmap: true, linear: false); //mipmap是分级细化纹理（LOD)这里开Mipmap会报错所以直接删了
+                texture = new Texture2D(width: 512, height: 512,TextureFormat.BGRA32, false);
                 if (!texture.LoadImage(data))
                 {
                     Debug.LogWarning(message: "CANNOT RETRIEVE TEXTURE FROM FILE" + filePath);

@@ -50,7 +50,7 @@ public class StelLight : MonoBehaviour {
                                                              //stelLight.flare = sunFlare;
                                                              //stelLight.shadows = shadowType;
 
-        sunImpostorSphere = transform.Find(name: "LightImpostorSphere").gameObject;
+        sunImpostorSphere = transform.Find("LightImpostorSphere").gameObject;
     }
 
     // Use this for initialization
