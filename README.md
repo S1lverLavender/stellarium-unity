@@ -1,3 +1,8 @@
+原有的项目中部分语法或组件在新版unity中已经弃用，所以我修改了部分代码使其能在新版unity（我的是2022.3）中使用
+我只修复了基于spout的部分，所以如果你想使用基于天空盒的渲染方式你仍然需要自己进行修改
+想要使用此项目，你只需要下载此项目中更新的.cs文件来替换原项目中报错的.cs文件
+
+
 # stellarium-unity
 ## Bridge tools to combine Stellarium's skies with the interactivity of the Unity game engine
 
