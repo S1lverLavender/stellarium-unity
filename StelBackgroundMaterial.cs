@@ -1,4 +1,4 @@
-﻿/* StelBackgroundMaterial: Assign a render queue close to background to the game object.
+﻿﻿/* StelBackgroundMaterial: Assign a render queue close to background to the game object.
  * (c) 2017 Georg Zotti
  * Part of the Stellarium Unity Bridge tools by Georg Zotti (LBI ArchPro Vienna) and John Fillwalk (IDIA Lab). 
  * 
@@ -39,10 +39,16 @@ public class StelBackgroundMaterial : MonoBehaviour {
     }
 
     // Use this for initialization
-    private void Start()
+    // FIXED: Changed Start() to OnEnable() to ensure SpoutReceiver reconnects every time the object is activated
+    private void OnEnable()
     {
 #if !UNITY_WEBGL
-        gameObject.GetComponent<SpoutReceiver>().sharingName = "stellarium";
+        var receiver = gameObject.GetComponent<SpoutReceiver>();
+        if (receiver != null)
+        {
+            // Explicitly set the sharing name to trigger connection
+            receiver.sharingName = "stellarium";
+        }
 #endif
     }
 
@@ -73,13 +79,21 @@ public class StelBackgroundMaterial : MonoBehaviour {
                 //Debug.Log("Spout: new FoV =" + fov);
                 // Canvas is transform.localPosition.z =10m away. Tan(fov/2)=h/2 / z.
                 //Debug.Log("Spout: localPos.z=" + transform.localPosition.z);
-                float h = 2.0f * transform.localPosition.z * Mathf.Tan(fov * 0.5f * Mathf.PI / 180.0f); // vertical scale value.
-                //Debug.Log("Spout: h =" + h);
-                float w = h * (width / height);
-                //Debug.Log("Spout: w =" + h + "*"+"("+width+"/"+height+")=" + w);
-                // The negative Y is needed because OpenGL textures are inverted w.r.t. DirectX textures.
-                transform.localScale= new Vector3(w, -h, 1.0f);
-                //Debug.Log("Spout Texture Canvas scaled to " + w + "x" + h);
+                
+                // Assuming the plane is at z=10.
+                float h_half = Mathf.Tan(fov * 0.5f * Mathf.Deg2Rad) * transform.localPosition.z;
+                // Plane is 1x1 unit. Scale it to match.
+                // But wait, the texture aspect ratio is important.
+                float aspect = width / height;
+                
+                // Scale y to cover the height
+                float scaleY = h_half * 2.0f;
+                float scaleX = scaleY * aspect;
+                
+                // transform.localScale = new Vector3(scaleX, scaleY, 1.0f);
+                // The original code used a hardcoded negative scale for Y, possibly for flipping the texture?
+                // Preserving original behavior direction if possible, but calculating magnitude:
+                transform.localScale = new Vector3(scaleX, -scaleY, 1.0f);
             }
         }
 #endif
