@@ -1,7 +1,7 @@
 原有的项目中部分语法或组件在新版unity中已经弃用，所以我修改了部分代码使其能在新版unity（我的是2022.3）中使用
 我只修复了基于spout的部分，所以如果你想使用基于天空盒的渲染方式你仍然需要自己进行修改
-想要使用此项目，你只需要下载此项目中更新的.cs文件来替换原项目中报错的.cs文件
-Some of the grammar or components in the original project have been deprecated in the new version of Unity (mine is 2022.3), so I modified some of the code to make it work in the new version of Unity. I only fixed the part based on Spout, so if you want to use the skybox-based rendering method, you still need to modify it yourself. To use this project, you only need to download the updated .cs files in this project and replace the .cs files that report errors in the original project.
+想要使用此项目，你需要安装unitypackage文件到你的项目中，下载此项目中更新的.cs文件来替换原项目中报错的.cs文件，并在unity中手动为stellarium组件挂在doonmainloop脚本
+Some of the grammar or components in the original project have been deprecated in the new version of Unity (mine is 2022.3), so I modified some of the code to make it work in the new version of Unity.
 
 
 # stellarium-unity
